@@ -4,8 +4,9 @@ pragma solidity ^0.8.24;
 import "./ERC20.sol";
 import "./ReentrancyGuard.sol";
 import "./Ownable.sol";
+import "./JGT-implementation.sol";
 
-contract Governance is ReentrancyGuard, Ownable {
+contract Governance is ReentrancyGuard, Ownable{
     JGTToken public immutable token;
 
     struct Proposal {
@@ -78,7 +79,7 @@ contract Governance is ReentrancyGuard, Ownable {
 
     event EmergencyPaused(bool paused);
 
-    constructor(address _token) {
+    constructor(address _token) ReentrancyGuard() Ownable(msg.sender){
         token = JGTToken(_token);
 
         alpha = 1e18; // Default alpha = 1
@@ -95,7 +96,7 @@ contract Governance is ReentrancyGuard, Ownable {
         uint256 _gamma
     ) external payable returns (uint256) {
         require(
-            token.balanceOf(msg.sender, block.number - 1) >= PROPOSAL_THRESHOLD,
+            token.balanceOf(msg.sender) >= PROPOSAL_THRESHOLD,
             "Must have enough tokens to propose"
         );
         require(msg.value >= proposalCreationFee, "Insufficient fee");
@@ -137,7 +138,7 @@ contract Governance is ReentrancyGuard, Ownable {
         Proposal storage proposal = proposals[proposalId];
         require(!proposal.hasVoted[msg.sender], "Already voted");
 
-        uint256 votes = token.balanceOf(msg.sender, proposal.startTime);
+        uint256 votes = token.balanceOf(msg.sender);
         require(votes > 0, "Must have voting power");
 
         proposal.hasVoted[msg.sender] = true;
@@ -193,7 +194,7 @@ contract Governance is ReentrancyGuard, Ownable {
     function isSucceeded(uint256 proposalId) public view returns (bool) {
         Proposal storage proposal = proposals[proposalId];
         return proposal.forVotes > proposal.againstVotes &&
-               proposal.forVotes > (token.totalSupply(block.number - 1) * 10) / 100; // 10% quorum
+               proposal.forVotes > (token.totalSupply() * 10) / 100; // 10% quorum
     }
 
     function canVote(uint256 proposalId) public view returns (bool) {
