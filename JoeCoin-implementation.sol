@@ -5,7 +5,6 @@ import "./ERC20.sol";
 import "./ReentrancyGuard.sol";
 import "./Ownable.sol";
 
-
 // Price Oracle Interface
 interface IPriceOracle {
     function getPrice(address asset) external view returns (uint256);
