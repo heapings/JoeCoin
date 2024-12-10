@@ -1,7 +1,7 @@
 # JoeCoin
 comp0163 coursework
 
-I was in two minds whether to code our own basic ERC20 functions like we had in the lab or use openzeppelin's open source ones.  I've gone with that for now.
+This code utilizes OpenZeppelin's open source ERC20 implementation. OpenZeppelin is a widely-used library that already has the base functions we want to inherit from.  I've copied the required files locally so he implementation works without internet access.
 
 JoeCoin (JOE): ERC20 stablecoin
 JoeVault: Manages collateralized lending
