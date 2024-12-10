@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./ERC20.sol";
+import "./ReentrancyGuard.sol";
+import "./Ownable.sol";
+import "./JoeCoin-implementation.sol";
 
 contract JGTToken is ERC20, Ownable {
     constructor() ERC20("Joe's Governance Token", "JGT") Ownable(msg.sender) {

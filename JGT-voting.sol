@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./ERC20.sol";
+import "./ReentrancyGuard.sol";
+import "./Ownable.sol";
+import "./JGT-implementation.sol";
 
 contract Governance is ReentrancyGuard {
     JGTToken public immutable token;
